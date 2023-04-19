@@ -22,7 +22,7 @@ public class SpringSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable()
+        httpSecurity.csrf().disable().cors().disable()
                 .authorizeHttpRequests(reqeust ->
                     reqeust.requestMatchers("/member/**", "/getInitData").permitAll()
                             .anyRequest().authenticated()
