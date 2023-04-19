@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board.website.repository.MemberRepository">
+    <select id="getAllMembers" resultType="Member">
+        SELECT member_id, id, password, email, name, nickname ,create_date, login_date FROM member
+    </select>
+
+    <insert id="joinMember" parameterType="member" useGeneratedKeys="false">
+        insert into member (id,password,email,name,nickname,role,create_date,login_date)
+        values (#{member.id},#{member.password},#{member.email},#{member.name},#{member.nickname}, #{member.role}, #{member.createDate}, #{member.loginDate})
+    </insert>
+
+    <select id="findMemberById" resultType="Member">
+        SELECT member_id, id, password, email, name, nickname, role FROM member WHERE id = #{id}
+    </select>
+</mapper>
