@@ -44,7 +44,7 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     private String parseBearerToken(String bearerToken) {
-        if( bearerToken.startsWith("Bearer ") && !bearerToken.isEmpty() ) {
+        if(bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
         }
         return null;
