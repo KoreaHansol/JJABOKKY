@@ -71,41 +71,4 @@ public class MemberController {
         String token = tokenProvider.createToken(memberById, (1000 * 60 * 15));
         return ResponseEntity.status(HttpStatus.OK).body(token);
     }
-
-
-
-//    @GetMapping("/token")
-//    public Map<String, Object> createToken(@RequestParam(value = "subject") String subject) {
-//        String token = securityService.createToken(subject, (2*1000*60));
-//        Map<String, Object> map = new LinkedHashMap<>();
-//        map.put("result", token);
-//        return map;
-//    }
-//
-//    @GetMapping("getsubject")
-//    public Map<String, Object> getSubject(@RequestParam(value = "token") String token) {
-//        String subject = securityService.getSubject(token);
-//        Map<String, Object> map = new LinkedHashMap<>();
-//        map.put("result", subject);
-//        return map;
-//    }
-
-//    @PostMapping("/doLogin")
-//    public ResponseEntity<Object> login(@RequestBody Member member) throws NullPointerException {
-//        System.out.println("doLogin 하라는 사인");
-//        Member findMember = memberService.findMemberById(member.getId());
-//        if(findMember == null) {
-//            return ResponseEntity.status(404).body("회원이 없습니다.");
-//        }
-//
-//        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-//
-//        boolean matches = bCryptPasswordEncoder.matches(member.getPassword(), findMember.getPassword());
-//
-//        if(matches) {
-//            return ResponseEntity.status(HttpStatus.OK).body(member);
-//        } else {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("비밀번호가 다릅니다");
-//        }
-//    }
 }

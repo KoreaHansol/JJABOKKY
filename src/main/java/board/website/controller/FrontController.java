@@ -14,8 +14,8 @@ public class FrontController {
     private MemberRepository memberRepository;
 
     @GetMapping("/getInitData")
-    public String hello() {
-        return "안녕하세요";
+    public String getBoardList() {
+        return "나중에 추가될 4가지 게시판의 목록들";
     }
 
 }
