@@ -10,11 +10,10 @@
 </template>
 
 <script>
-import CommonHeader from '@/components/commonHeader.vue'
 
 export default {
   name: 'Event',
-  components: { CommonHeader },
+  components: {},
   data () {
     return {
     }

@@ -29,7 +29,7 @@ public class TokenController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("아이디를 찾을수 없습니다.");
         }
 
-        String token = tokenProvider.createToken(memberById, (1000 * 60 * 15));
+        String token = tokenProvider.createToken(memberById, (1000 * 60 * 60));
         return ResponseEntity.status(HttpStatus.OK).body(token);
     }
 }

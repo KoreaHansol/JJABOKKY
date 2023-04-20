@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 @Slf4j
 @Component
@@ -26,11 +27,21 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
+        Enumeration headerNames = request.getHeaderNames();
+
+        while(headerNames.hasMoreElements()) {
+            String name = (String)headerNames.nextElement();
+            String value = request.getHeader(name);
+            System.out.println("headers=" + value);
+        }
         try {
             String bearerToken = request.getHeader("Authorization");
+            log.info("bearerToken={}", bearerToken);
             if (bearerToken != null) {
                 String token = parseBearerToken(request.getHeader("Authorization"));
                 String id = tokenProvider.getSubject(token);
+                log.info("token id={}", id);
                 AbstractAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(id, null, AuthorityUtils.NO_AUTHORITIES);
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContext securityContext = SecurityContextHolder.createEmptyContext();

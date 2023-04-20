@@ -29,7 +29,7 @@
 <script>
 import req2svr from './req2svr'
 
-import NormalInput from '@/components/normalInput.vue'
+import NormalInput from '@/components/normalInput'
 
 export default {
   name: 'Login',

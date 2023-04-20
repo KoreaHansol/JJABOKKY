@@ -10,7 +10,7 @@
   </div>
 </template>
 <script>
-import lodash from 'lodash'
+import _ from 'lodash'
 import outsideClick from '@/mixins/outsideClick'
 
 export default {

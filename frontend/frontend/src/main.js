@@ -8,7 +8,6 @@ import { store } from './store/store'
 import checkJwtToken from './util/checkJwtToken'
 Vue.config.productionTip = false
 
-
 axios.interceptors.request.use( config => {
   const token = sessionStorage.getItem( 'token' )
   if( token ) {

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import CommonHeader from '@/components/commonHeader.vue'
+import CommonHeader from '@/components/commonHeader'
 
 export default {
   name: 'App',

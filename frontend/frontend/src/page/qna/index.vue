@@ -22,11 +22,10 @@
 </template>
 
 <script>
-import CommonHeader from '@/components/commonHeader.vue'
 import SelectBox from '@/components/selectBox'
 export default {
   name: 'QNA',
-  components: { CommonHeader, SelectBox },
+  components: { SelectBox },
   data () {
     return {
       selectVisibleItems: [

@@ -156,6 +156,7 @@ export default {
     }
     
     .stauts {
+      z-index: 99999;
       display: grid;
       grid-template-rows: repeat(4, 1fr);
       position: absolute;

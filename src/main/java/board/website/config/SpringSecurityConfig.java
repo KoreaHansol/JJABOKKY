@@ -4,6 +4,7 @@ import board.website.security.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -24,7 +25,8 @@ public class SpringSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable().cors().disable()
                 .authorizeHttpRequests(reqeust ->
-                    reqeust.requestMatchers("/member/**", "/getInitData").permitAll()
+                    reqeust.requestMatchers("/member/**", "/token/refresh/**", "/file/**").permitAll()
+                            .requestMatchers(HttpMethod.OPTIONS).permitAll()
                             .anyRequest().authenticated()
                 );
 

@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import NormalInput from '@/components/normalInput.vue'
+import NormalInput from '@/components/normalInput'
 import req2svr from './req2svr'
 
 export default {

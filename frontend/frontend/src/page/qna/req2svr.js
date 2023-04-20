@@ -7,9 +7,14 @@ let checkResCode = res => {
 }
 
 export default {
-  joinMember( { id, email, password, name, nickname } ) {
-    return axios.post( apiUrl( '/member/join' ), {
-      id, email, password, name, nickname ,
+  savePost( title, content ) {
+    return axios.post( apiUrl( '/board/save' ), {
+      title, content
+    } ).then( x => checkResCode( x ) )
+  },
+  saveImageUrls( imageUrls ) {
+    return axios.post( apiUrl( '/board/save/images' ), {
+      imageUrls
     } ).then( x => checkResCode( x ) )
   }
 }

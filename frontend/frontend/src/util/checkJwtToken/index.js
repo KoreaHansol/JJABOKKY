@@ -2,8 +2,6 @@ import { store } from '../../store/store'
 import jwt_decode from 'jwt-decode'
 import req2svr from './req2svr'
 
-let timerId = null
-  
 export async function checkExpireJwtToken( decodeToken ) {
   if( decodeToken ) {
     const token = sessionStorage.getItem( 'token' )
@@ -15,7 +13,7 @@ export async function checkExpireJwtToken( decodeToken ) {
   if( now < exp ) {
     console.log( '세션만료기간이 아직 지나지 않음', new Date(exp) )
     store.commit( 'expireToken', false )
-    timerId = setTimeout( () => { checkJwtToken( decodeToken ) }, 1000 * 60 * 15 )
+    setTimeout( () => { checkJwtToken( decodeToken ) }, 1000 * 60 * 60 )
     return false
   }
 
@@ -26,8 +24,8 @@ export async function checkExpireJwtToken( decodeToken ) {
   }
 
   store.commit( 'expireToken', false )
-  timerId = setTimeout( () => { checkJwtToken( decodeToken ) }, 1000 * 60 * 15 )
-  
+  setTimeout( () => { checkJwtToken( decodeToken ) }, 1000 * 60 * 60 )
+
   window.sessionStorage.setItem( 'token', refreshToken )
 
   // 세션만료.. logout todo
@@ -35,7 +33,6 @@ export async function checkExpireJwtToken( decodeToken ) {
 }
 
 export default function checkJwtToken() {
-  let timerId = null
   const token = sessionStorage.getItem( 'token' )
   if( !token ) {
     console.log( '토큰이 없음' )
@@ -44,10 +41,6 @@ export default function checkJwtToken() {
       nickname: null,
       email: null
     } )
-    if( timerId ) {
-      timerId = clearTimeout( timerId )
-    }
-    return
   }
   let decodeToken = null
   try {
