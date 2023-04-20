@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import jwt_decode from 'jwt-decode'
-import { checkExpireTokenDetail } from '@/util/checkExpireToken'
-import checkExpireToken from '@/util/checkExpireToken'
+import checkJwtToken from '@/util/checkJwtToken'
 
 Vue.use(Vuex)
 
@@ -76,7 +75,7 @@ export const store = new Vuex.Store( {
       } catch( err ) { } // millsecond
       context.commit( 'reqeustLogin' )
       await sessionStorage.setItem( 'token', token )
-      checkExpireToken()
+      checkJwtToken()
       context.commit( 'setToken', token )
       context.commit( 'setMember' )
       context.commit( 'expireToken', false )
@@ -84,7 +83,7 @@ export const store = new Vuex.Store( {
     async reqeustLogout( context ) {
       context.commit( 'reqeustLogout' )
       await sessionStorage.removeItem( 'token' )
-      checkExpireToken()
+      checkJwtToken()
       context.commit( 'setToken', null )
       context.commit( 'setDecodeToken', null )
       context.commit( 'expireToken', true )

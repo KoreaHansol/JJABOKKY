@@ -4,7 +4,7 @@ import req2svr from './req2svr'
 
 let timerId = null
   
-export async function checkExpireTokenDetail( decodeToken ) {
+export async function checkExpireJwtToken( decodeToken ) {
   if( decodeToken ) {
     const token = sessionStorage.getItem( 'token' )
     store.commit( 'setMember', decodeToken.member )
@@ -15,7 +15,7 @@ export async function checkExpireTokenDetail( decodeToken ) {
   if( now < exp ) {
     console.log( '세션만료기간이 아직 지나지 않음', new Date(exp) )
     store.commit( 'expireToken', false )
-    timerId = setTimeout( () => { checkExpireToken( decodeToken ) }, 1000 * 60 * 15 )
+    timerId = setTimeout( () => { checkJwtToken( decodeToken ) }, 1000 * 60 * 15 )
     return false
   }
 
@@ -26,7 +26,7 @@ export async function checkExpireTokenDetail( decodeToken ) {
   }
 
   store.commit( 'expireToken', false )
-  timerId = setTimeout( () => { checkExpireToken( decodeToken ) }, 1000 * 60 * 15 )
+  timerId = setTimeout( () => { checkJwtToken( decodeToken ) }, 1000 * 60 * 15 )
   
   window.sessionStorage.setItem( 'token', refreshToken )
 
@@ -34,7 +34,7 @@ export async function checkExpireTokenDetail( decodeToken ) {
   return true
 }
 
-export default function checkExpireToken() {
+export default function checkJwtToken() {
   let timerId = null
   const token = sessionStorage.getItem( 'token' )
   if( !token ) {
@@ -55,5 +55,5 @@ export default function checkExpireToken() {
   } catch( err ) { } // millsecond
   store.commit( 'reqeustLogin' )
   store.commit( 'setDecodeToken', decodeToken )
-  checkExpireTokenDetail( decodeToken )
+  checkExpireJwtToken( decodeToken )
 }

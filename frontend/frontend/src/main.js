@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import { store } from './store/store'
-import checkExpireToken from './util/checkExpireToken'
+import checkJwtToken from './util/checkJwtToken'
 Vue.config.productionTip = false
 
 
@@ -19,7 +19,7 @@ axios.interceptors.request.use( config => {
   
 } )
 
-checkExpireToken()
+checkJwtToken()
 
 /* eslint-disable no-new */
 new Vue({
