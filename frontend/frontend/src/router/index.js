@@ -4,6 +4,7 @@ import MainPage from '@/page/main'
 import JoinPage from '@/page/join'
 import LoginPage from '@/page/login'
 import QNA from '@/page/qna'
+import QNANEW from '@/page/qna/new'
 import Knowledge from '@/page/knowledge'
 import Community from '@/page/community'
 import Event from '@/page/event'
@@ -32,6 +33,11 @@ export default new Router({
       path: '/qna',
       name: 'QNA',
       component: QNA
+    },
+    {
+      path: '/qna/new',
+      name: 'QNANEW',
+      component: QNANEW
     },
     {
       path: '/knowledge',

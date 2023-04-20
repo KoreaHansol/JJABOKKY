@@ -1,12 +1,17 @@
 <template>
   <div id="app">
+		<common-header></common-header>
     <router-view/>
   </div>
 </template>
 
 <script>
+import CommonHeader from '@/components/commonHeader.vue'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: { CommonHeader },
+
 }
 </script>
 

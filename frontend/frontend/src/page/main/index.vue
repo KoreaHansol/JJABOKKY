@@ -1,6 +1,5 @@
 <template>
   <div class="main-page-container">
-    <common-header></common-header>
     <div class="content">
       <div class="side">
       <div class="ranker-title">Top Writer</div>
@@ -67,7 +66,7 @@ export default {
       this.$router.push( '/login' )
     },
     joinQNA() {
-      this.$router.push( 'qna' )
+      this.$router.push( '/qna' )
     }
   }
 

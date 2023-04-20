@@ -1,6 +1,5 @@
 <template>
   <div class="qna-container">
-      <common-header></common-header>
       <div class="contant-container">
         <img class="img-okky" src="/static/image/qna.JPG"/>
         <div class="header"></div>

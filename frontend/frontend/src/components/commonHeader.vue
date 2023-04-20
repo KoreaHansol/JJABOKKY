@@ -5,10 +5,10 @@
       <div class="title">OKKY</div>
     </div>
     <div class="link-area">
-      <div class="link" :class="{ current: pathName === '/qna' }" @click="goPage('/qna')">Q&A</div>
-      <div class="link" :class="{ current: pathName === '/knowledge' }" @click="goPage('/knowledge')">지식</div>
-      <div class="link" :class="{ current: pathName === '/community' }" @click="goPage('community')">커뮤니티</div>
-      <div class="link" :class="{ current: pathName === '/event' }" @click="goPage('event')">이벤트</div>
+      <div class="link" :class="{ current: isValidLink( 'qna' ) }" @click="goPage('/qna')">Q&A</div>
+      <div class="link" :class="{ current: isValidLink( 'knowledge' ) }" @click="goPage('/knowledge')">지식</div>
+      <div class="link" :class="{ current: isValidLink( 'community' ) }" @click="goPage('community')">커뮤니티</div>
+      <div class="link" :class="{ current: isValidLink( 'event' ) }" @click="goPage('event')">이벤트</div>
     </div>
     <div class="login-area" v-if="!isLogin">
         <div class="menu" @click="goPage('/login')">로그인</div>
@@ -27,6 +27,8 @@
   </div>
 </template>
 <script>
+
+import _ from 'lodash'
 import outsideClick from '@/mixins/outsideClick'
 
 export default {
@@ -37,13 +39,11 @@ export default {
   mixins: [ outsideClick ],
   data() {
     return {
-      openStatus: false
+      openStatus: false,
+      pathName: null,
     }
   },
   computed: {
-    pathName() {
-      return window.location.pathname;
-    },
     isLogin() {
       return this.$store.getters.isLogin
     },
@@ -52,12 +52,13 @@ export default {
     }
   },
   created() {
-    
+    this.pathName = window.location.pathname
   },
   methods: {
     goPage( path ) {
       if( this.pathName !== path ) {
         this.$router.push( path )
+        this.pathName = window.location.pathname
       }
     },
     onClickStatus() {
@@ -69,6 +70,9 @@ export default {
     async logout() {
       await this.$store.dispatch( 'reqeustLogout' )
       console.log( this.isLogin )
+    },
+    isValidLink( path ) { // 렌더링이 너무 많이된다 나중에 고치자
+      return _.includes( this.pathName, path )
     }
   }
 }
