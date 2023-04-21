@@ -10,7 +10,7 @@
 
     <div class="btn-area">
       <div class="button">취소</div>
-      <div class="button save" @click="save">저장</div>
+      <div class="button save" :class="{ 'none-valid': !isValidBoardContent }" @click="save">저장</div>
     </div>
   </div>
 </template>
@@ -46,6 +46,9 @@ export default {
     },
     nickname() {
       return _.get( this.member, 'nickname', '' )
+    },
+    isValidBoardContent() {
+      return this.selectSortItem.id > 0 && !!this.title && !!this.contents.content
     }
   },
   created() {
@@ -56,10 +59,25 @@ export default {
       this.contents = contents
     },
     async save() {
-      await this.req2svr.savePost( this.title, this.contents.content )
-      const imageUrls = _.get( this, 'contents.imageUrls' ) || []
-      if( imageUrls.length ) {
-        await this.req2svr.saveImageUrls( imageUrls )
+      if( !this.isValidBoardContent ) {
+        alert( '필요한 모든 내용을 작성해주세요' )
+        return
+      }
+      if( _.isEmpty( this.member ) ) {
+        alert( '로그인 후 진행해주세요.' )
+        return
+      }
+
+      try {
+        await this.req2svr.savePost( this.member.memberId, this.title, this.contents.content, 'qna', this.selectSortItem.text )
+        const imageUrls = _.get( this, 'contents.imageUrls' ) || []
+        if( imageUrls.length ) {
+          await this.req2svr.saveImageUrls( imageUrls )
+        }
+        alert( '게시물을 등록했습니다.' )
+        this.$router.push( '/qna' )
+      } catch( err ) {
+        alert( '게시물을 등록하는 중 오류가 발생했습니다.' )
       }
     }
   }
@@ -115,13 +133,17 @@ export default {
         border-radius: 6px;
         border: 1px solid #D2D4D9;
 
-
         &.save {
           margin-left: 10px;
-          background-color: #98D2FC;        
+          background-color: #0090F9;        
           color: #ffffff;
-        }
 
+          &.none-valid {
+            background-color: #98D2FC;        
+            color: #ffffff;
+            pointer-events: none;
+          }
+        }
       }
     }
   }

@@ -5,10 +5,10 @@
       <div class="title">OKKY</div>
     </div>
     <div class="link-area">
-      <div class="link" :class="{ current: isValidLink( 'qna' ) }" @click="goPage('/qna')">Q&A</div>
-      <div class="link" :class="{ current: isValidLink( 'knowledge' ) }" @click="goPage('/knowledge')">지식</div>
-      <div class="link" :class="{ current: isValidLink( 'community' ) }" @click="goPage('community')">커뮤니티</div>
-      <div class="link" :class="{ current: isValidLink( 'event' ) }" @click="goPage('event')">이벤트</div>
+      <div class="link" :class="{ current: isValidLink( 'qna' ) }" @click="goPageWithLogin('/qna')">Q&A</div>
+      <div class="link" :class="{ current: isValidLink( 'knowledge' ) }" @click="goPageWithLogin('/knowledge')">지식</div>
+      <div class="link" :class="{ current: isValidLink( 'community' ) }" @click="goPageWithLogin('community')">커뮤니티</div>
+      <div class="link" :class="{ current: isValidLink( 'event' ) }" @click="goPageWithLogin('event')">이벤트</div>
     </div>
     <div class="login-area" v-if="!isLogin">
         <div class="menu" @click="goPage('/login')">로그인</div>
@@ -55,6 +55,13 @@ export default {
     this.pathName = window.location.pathname
   },
   methods: {
+    goPageWithLogin( path ) {
+      if( !this.isLogin ) {
+        alert( '로그인 먼저 해주세요' )
+        return
+      }
+      this.goPage( path )
+    },
     goPage( path ) {
       if( this.pathName !== path ) {
         this.$router.push( path )
@@ -69,7 +76,6 @@ export default {
     },
     async logout() {
       await this.$store.dispatch( 'reqeustLogout' )
-      console.log( this.isLogin )
     },
     isValidLink( path ) { // 렌더링이 너무 많이된다 나중에 고치자
       return _.includes( this.pathName, path )

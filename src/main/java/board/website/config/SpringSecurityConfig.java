@@ -25,7 +25,7 @@ public class SpringSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable().cors().disable()
                 .authorizeHttpRequests(reqeust ->
-                    reqeust.requestMatchers("/member/**", "/token/refresh/**", "/file/**").permitAll()
+                    reqeust.requestMatchers("/getInitData","/member/**", "/token/**", "/file/**").permitAll()
                             .requestMatchers(HttpMethod.OPTIONS).permitAll()
                             .anyRequest().authenticated()
                 );

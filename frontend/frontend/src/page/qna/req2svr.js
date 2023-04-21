@@ -7,14 +7,20 @@ let checkResCode = res => {
 }
 
 export default {
-  savePost( title, content ) {
+  getPostList( path ) {
+    return axios.get( apiUrl( `/board/getPostList${ path }` ) ).then( x => checkResCode( x ) )
+  },
+  savePost( memberId, title, content, boardType, subBoardType ) {
     return axios.post( apiUrl( '/board/save' ), {
-      title, content
+      memberId, title, content, boardType, subBoardType
     } ).then( x => checkResCode( x ) )
   },
   saveImageUrls( imageUrls ) {
     return axios.post( apiUrl( '/board/save/images' ), 
       imageUrls
     ).then( x => checkResCode( x ) )
-  }
+  },
+  getPost( boardId ) {
+    return axios.get( apiUrl( `/board/getPost/${ boardId }` ) ).then( x => checkResCode( x ) )
+  },
 }

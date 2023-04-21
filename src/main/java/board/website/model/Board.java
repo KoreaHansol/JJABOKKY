@@ -7,10 +7,11 @@ import lombok.Setter;
 public class Board {
     private int boardId;
     private int memberId;
+    private String nickname;
     private String boardType;
     private String subBoardType;
     private String title;
     private String content;
-    private String createDate;
-    private String modifyDate;
+    private long createDate;
+    private long modifyDate;
 }

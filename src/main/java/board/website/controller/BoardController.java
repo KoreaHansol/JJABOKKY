@@ -1,24 +1,38 @@
 package board.website.controller;
 
 import board.website.model.Board;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import board.website.repository.BoardRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/board")
 public class BoardController {
+    BoardRepository boardRepository;
+
+    @GetMapping("/getPostList/{boardType}")
+    public ArrayList<Board> getPostList(@PathVariable String boardType) {
+        ArrayList<Board> postList = boardRepository.getPostList(boardType);
+        return postList;
+    }
+
+    @GetMapping("/getPost/{boardId}")
+    public Board getPost(@PathVariable String boardId) {
+        return boardRepository.getPost(boardId);
+    }
+
+
     @PostMapping("/save")
-    public void saveWrite(@RequestBody Board board) {
-        System.out.println("saveWrite " + board.getTitle());
-        System.out.println("saveWrite " + board.getContent());
+    public void savePost(@RequestBody Board board) {
+        board.setCreateDate(System.currentTimeMillis());
+        boardRepository.savePost(board);
     }
 
     @PostMapping("/save/images")
     public void saveImageUrls(@RequestBody ArrayList<String> imageUrls) {
-        System.out.println("saveImageUrls " + imageUrls);
+
     }
 }

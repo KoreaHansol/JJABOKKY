@@ -37,7 +37,6 @@ public class FileController {
 
     @GetMapping("/getFile/{filename}")
     public UrlResource downloadFile(@PathVariable String filename) throws MalformedURLException {
-        System.out.println("getFullPath(filename)" + getFullPath(filename));
         return new UrlResource("file:" + getFullPath(filename));
     }
 

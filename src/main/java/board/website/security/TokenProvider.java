@@ -1,10 +1,11 @@
 package board.website.security;
 
 import board.website.model.Member;
-import board.website.model.StreamlinedMember;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -14,7 +15,9 @@ import java.util.Date;
 
 @Service
 public class TokenProvider {
-    private static final String SECRET_KEY = "jfewiojfoiewjofewjoifjewiojfiofnqhwfwqiuhfqiwhfiuwqhfiuqwhfiuhiuewjfiowe";
+    private String secretKey = "kimhansoljjabokkykimhansoljjabokkykimhansoljjabokky";
+    private byte[] secretKeyBytes = Base64.decodeBase64(secretKey);
+
 
     public String createToken(Member member, long expTime) {
         if(expTime <= 0) {
@@ -22,18 +25,19 @@ public class TokenProvider {
         }
 
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
-        byte[] secretKeyBytes = DatatypeConverter.parseBase64Binary(SECRET_KEY);
         Key signingKey = new SecretKeySpec(secretKeyBytes, signatureAlgorithm.getJcaName());
         return Jwts.builder()
                 .setSubject(member.getId())
                 .signWith(signingKey, signatureAlgorithm)
                 .setExpiration(new Date(System.currentTimeMillis() + expTime))
-                .claim("member", StreamlinedMember.builder()
+                .claim("member", Member.builder()
+                        .memberId(member.getMemberId())
                         .id(member.getId())
                         .email(member.getEmail())
                         .name(member.getName())
                         .role(member.getRole())
                         .nickname(member.getNickname())
+                        .createDate(member.getCreateDate())
                         .loginDate(member.getLoginDate())
                         .build() )
                 .compact();
@@ -41,7 +45,7 @@ public class TokenProvider {
 
     public String getSubject(String token) {
         Claims claims = Jwts.parserBuilder()
-                .setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY))
+                .setSigningKey(secretKeyBytes)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();

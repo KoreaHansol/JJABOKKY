@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board.website.repository.BoardRepository">
+    <select id="getPostList" resultType="Board">
+        SELECT a.board_id, a.member_id, b.nickname, a.board_type, a.sub_board_type, a.title, a.content, a.create_date, a.modify_date
+        FROM board a
+        INNER JOIN member b on a.member_id = b.member_id
+        WHERE a.board_type = #{boardType}
+    </select>
+    <select id="getPost" resultType="Board">
+        SELECT board_id, member_id, board_type, sub_board_type, title, content, create_date, modify_date
+        FROM board
+        WHERE board_id = #{boardId}
+    </select>
+    <insert id="savePost" parameterType="board">
+        insert into board (member_id, board_type, sub_board_type, title, content, create_date, modify_date)
+        values (#{board.memberId},#{board.boardType},#{board.subBoardType},#{board.title},#{board.content}, #{board.createDate}, #{board.modifyDate})
+    </insert>
+</mapper>

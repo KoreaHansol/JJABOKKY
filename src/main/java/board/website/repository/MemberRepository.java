@@ -4,11 +4,11 @@ import board.website.model.Member;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Mapper
 public interface MemberRepository {
-    List<Member> getAllMembers();
+//    ArrayList<Member> getAllMembers();
 
     void joinMember(@Param("member") Member member);
 

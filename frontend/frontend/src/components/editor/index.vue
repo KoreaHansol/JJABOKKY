@@ -81,8 +81,8 @@ export default {
           const result = await req2svr.uplodaFile( formData )
           const imgUrl = apiUrl( `/file/getFile/${ result.storeFileName }` )
           this.imageUrls.push( imgUrl )
-          const range = this.editor.getSelection()
-          this.editor.insertEmbed( range.index, 'image', imgUrl )
+          const lastRange = this.editor.getLength()
+          this.editor.insertEmbed( lastRange.index, 'image', imgUrl )
         } catch ( err ) {
           console.error( err )
         }

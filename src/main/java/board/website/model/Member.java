@@ -4,7 +4,7 @@ import lombok.*;
 
 import java.sql.Timestamp;
 
-@Getter @Setter
+@Getter @Setter @Builder
 public class Member {
 
     private Integer memberId;

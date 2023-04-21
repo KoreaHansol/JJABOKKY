@@ -19,6 +19,7 @@ export async function checkExpireJwtToken( decodeToken ) {
 
   console.log( '세션이 만료됨 refresh token 요청' )
   const refreshToken = await req2svr.refreshToken( store.getters.getMember )
+  console.log( 'refreshToken', refreshToken )
   if( !refreshToken ) {
     store.commit( 'expireToken', true )
   }
