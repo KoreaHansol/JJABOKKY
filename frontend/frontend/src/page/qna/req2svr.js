@@ -13,8 +13,8 @@ export default {
     } ).then( x => checkResCode( x ) )
   },
   saveImageUrls( imageUrls ) {
-    return axios.post( apiUrl( '/board/save/images' ), {
+    return axios.post( apiUrl( '/board/save/images' ), 
       imageUrls
-    } ).then( x => checkResCode( x ) )
+    ).then( x => checkResCode( x ) )
   }
 }

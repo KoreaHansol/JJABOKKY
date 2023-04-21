@@ -1,11 +1,11 @@
 <template>
-  <div class="selectbox-container" :class="{ left, right }" ref="insideRootElement" @click="openSelectBox = true">
+  <div class="selectbox-container" :class="{ left, right }" @click="openSelectBox = true">
     <div class="select-value">
       <slot class="slot"></slot>
     </div>
 
-    <div class="select-items" v-if="openSelectBox">
-      <div class="item" :class="{ 'selected': selectedItemId == data.id }" v-for="data in datas" :key="data.id" @click="onChangeItem( data )">{{ data.text }}</div>
+    <div class="select-items" v-if="openSelectBox" ref="insideRootElement">
+      <div class="item" :class="{ 'selected': selectedItemId == data.id }" v-for="data in datas" :key="data.id" @click.stop="onChangeItem( data )">{{ data.text }}</div>
     </div>
   </div>
 </template>
@@ -54,6 +54,7 @@ export default {
 
 <style scoped lang="scss"> 
 .selectbox-container {
+  z-index: 99999;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -13,13 +13,12 @@ import java.util.ArrayList;
 public class BoardController {
     @PostMapping("/save")
     public void saveWrite(@RequestBody Board board) {
-        System.out.println(board.getTitle());
-        System.out.println(board.getContent());
+        System.out.println("saveWrite " + board.getTitle());
+        System.out.println("saveWrite " + board.getContent());
     }
 
     @PostMapping("/save/images")
-    public void saveImageUrls(@RequestBody Board board) {
-        System.out.println(board.getTitle());
-        System.out.println(board.getContent());
+    public void saveImageUrls(@RequestBody ArrayList<String> imageUrls) {
+        System.out.println("saveImageUrls " + imageUrls);
     }
 }

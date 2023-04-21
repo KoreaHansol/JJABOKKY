@@ -36,6 +36,10 @@ export const store = new Vuex.Store( {
   },
   mutations: {
     reqeustLogin( state ) {
+      const token = sessionStorage.getItem( 'token' )
+      if( !token ) {
+        state.isLogin = false
+      }
       state.isLogin = true
     },
     reqeustLogout( state ) {

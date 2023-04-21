@@ -46,7 +46,9 @@ export default function checkJwtToken() {
   try {
     decodeToken = jwt_decode( token )
   } catch( err ) { } // millsecond
-  store.commit( 'reqeustLogin' )
-  store.commit( 'setDecodeToken', decodeToken )
-  checkExpireJwtToken( decodeToken )
+  if( decodeToken ) {
+    store.commit( 'reqeustLogin' )
+    store.commit( 'setDecodeToken', decodeToken )
+    checkExpireJwtToken( decodeToken )
+  }
 }
