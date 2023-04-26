@@ -5,10 +5,10 @@
       <div class="title">OKKY</div>
     </div>
     <div class="link-area">
-      <div class="link" :class="{ current: isValidLink( 'qna' ) }" @click="goPageWithLogin('/qna')">Q&A</div>
-      <div class="link" :class="{ current: isValidLink( 'knowledge' ) }" @click="goPageWithLogin('/knowledge')">지식</div>
-      <div class="link" :class="{ current: isValidLink( 'community' ) }" @click="goPageWithLogin('community')">커뮤니티</div>
-      <div class="link" :class="{ current: isValidLink( 'event' ) }" @click="goPageWithLogin('event')">이벤트</div>
+      <div class="link" :class="{ current: pathName === '/qna' }" @click="goPageWithLogin('/qna')">Q&A</div>
+      <div class="link" :class="{ current: pathName === '/knowledge' }" @click="goPageWithLogin('/knowledge')">지식</div>
+      <div class="link" :class="{ current: pathName === '/community' }" @click="goPageWithLogin('/community')">커뮤니티</div>
+      <div class="link" :class="{ current: pathName === '/event' }" @click="goPageWithLogin('/event')">이벤트</div>
     </div>
     <div class="login-area" v-if="!isLogin">
         <div class="menu" @click="goPage('/login')">로그인</div>
@@ -31,15 +31,14 @@
 import _ from 'lodash'
 import outsideClick from '@/mixins/outsideClick'
 
+const DEFAULT_PATHNAME = '/qna'
 export default {
   name: 'Header',
-  props: {
-    link: null
-  },
   mixins: [ outsideClick ],
   data() {
     return {
       openStatus: false,
+      pathName: DEFAULT_PATHNAME
     }
   },
   computed: {
@@ -50,6 +49,10 @@ export default {
       return this.$store.getters.getMember
     }
   },
+  created() {
+    console.log( 'window.location.pathName', window.location.pathname )
+    this.pathName = window.location.pathname
+  },
   methods: {
     goPageWithLogin( path ) {
       if( !this.isLogin ) {
@@ -59,10 +62,11 @@ export default {
       this.goPage( path )
     },
     goPage( path ) {
-      const pathName = window.location.pathname
-      if( pathName !== path ) {
+      if( this.pathName !== path ) {
         this.$router.push( path )
       }
+      console.log( 'gopage' )
+      this.pathName = window.location.pathname
     },
     onClickStatus() {
 
@@ -74,8 +78,7 @@ export default {
       await this.$store.dispatch( 'reqeustLogout' )
     },
     isValidLink( path ) { // 렌더링이 너무 많이된다 나중에 고치자
-      const pathName = window.location.pathname
-      return _.includes( pathName, path )
+      return _.includes( this.pathName, path )
     }
   }
 }

@@ -1,8 +1,8 @@
 <template>
   <div class="new-container">
-    <div class="title">기술 궁금증 해결하기</div>
+    <div class="title">정보는 나눌 수록 늘어나는 것</div>
     <div class="sub-title">
-    <span class="nickname">{{ this.nickname }}</span>님 지식공유 플랫폼 OKKY에서 최고의 개발자들과 함께 궁금증을 해결하세요.</div>
+    <span class="nickname">{{ this.nickname }}</span>님 지식공유 플랫폼 OKKY의 개발자들과 함께 나누고 싶은 IT 뉴스, 정보가 있다면 공유해주세요.</div>
     
     <select-box class="select-box" :datas="selectedTopics" v-model="selectedTopic">{{ selectedTopic && selectedTopic.text }}</select-box>
     <input class="title-input" placeholder="제목을 입력해 주세요" v-model="title"/>
@@ -21,10 +21,10 @@ import req2svr from './req2svr'
 import SelectBox from '@/components/selectBox'
 import Editor from '@/components/editor'
 
-const BOARDTYPE = 'Q&A' 
+const BOARDTYPE = 'Knowledge' 
 
 export default {
-  name: 'QNA',
+  name: 'KnowledgeWrite',
   components: { SelectBox, Editor },
   data () {
     return {
@@ -35,9 +35,10 @@ export default {
       },
       selectedTopics: [
         { id: -1, text: '토픽을 선택해 주세요' },
-        { id: 1, text: '기술', value: 'tech' },
-        { id: 2, text: '커리어', value: 'career' },
-        { id: 3, text: '기타', value: 'etc' },
+        { id: 1, text: 'Tech 뉴스', value: 'technews' },
+        { id: 2, text: '팁', value: 'tip' },
+        { id: 3, text: '칼럼', value: 'column' },
+        { id: 3, text: '리뷰', value: 'review' },
       ],
       selectedTopic: { id: -1, text: '토픽을 선택해 주세요' }
     }
@@ -78,7 +79,7 @@ export default {
           await this.req2svr.saveImageUrls( imageUrls )
         }
         alert( '게시물을 등록했습니다.' )
-        this.$router.push( '/qna' )
+        this.$router.push( '/knowledge' )
       } catch( err ) {
         alert( '게시물을 등록하는 중 오류가 발생했습니다.' )
       }

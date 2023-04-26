@@ -33,7 +33,7 @@ import req2svr from './req2svr'
 import SelectBox from '@/components/selectBox'
 import Editor from '@/components/editor'
 export default {
-  name: 'POST',
+  name: 'KnowledgeView',
   components: { SelectBox, Editor },
   props: {
     boardId: {
@@ -56,9 +56,10 @@ export default {
     },
     covertSubBoartType() {
       return {
-        'tech': '기술',
-        'career': '커리아',
-        'etc': '기타'
+        'technews': 'tech 뉴스',
+        'tip': '팁',
+        'column': '컬럼',
+        'review': '리뷰',
       }
     }
     

@@ -27,24 +27,28 @@ export default {
     quillEditor,
   },
   props: {
-    useImage: true,
+    useImage: {
+      type: Boolean,
+      default: true
+    },
     initFlag: 0
   },
   data() {
     return {
-      editorOption: {
-        modules: {
-          toolbar: {
-            container: [
-              ['image'],
-              [{ header: [1, 2, 3, false] }],
-              ["bold", "italic", "underline", "strike", "blockquote"],
-            ],
-          },
-        },
-      },
       content: '',
       imageUrls: [],
+      editorOption: {
+        placeholder: "이곳에 글을 적어주세요",
+        modules: {
+          toolbar: [
+            ["bold", "underline"],
+            this.useImage ? ["image"] : [],
+          ],
+          syntax: {
+            highlight: (text) => hljs.highlightAuto(text).value,
+          },
+        },
+      }
     }
   },
   methods: {
@@ -55,17 +59,6 @@ export default {
       } )
     },
     onEditorReady(editor) {
-      this.editorOption = {
-        modules: {
-          toolbar: {
-            container: [
-              ['image']
-              [{ header: [1, 2, 3, false] }],
-              ["bold", "italic", "underline", "strike", "blockquote"],
-            ],
-          },
-        },
-      },
       editor.getModule( 'toolbar' ).addHandler( 'image', this.imageHandler )
     },
     async imageHandler() {

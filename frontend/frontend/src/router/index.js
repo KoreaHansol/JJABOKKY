@@ -3,12 +3,17 @@ import Router from 'vue-router'
 import MainPage from '@/page/main'
 import JoinPage from '@/page/join'
 import LoginPage from '@/page/login'
-import QNA from '@/page/qna'
-import QNANEW from '@/page/qna/new'
-import QNAPOST from '@/page/qna/post'
-import Knowledge from '@/page/knowledge'
-import Community from '@/page/community'
-import Event from '@/page/event'
+import QnA from '@/page/boards/qna'
+import QnAWrite from '@/page/boards/qna/write'
+import QNAView from '@/page/boards/qna/view'
+
+import Knowledge from '@/page/boards/knowledge'
+import KnowledgeWrite from '@/page/boards/knowledge/write'
+import KnowledgeView from '@/page/boards/knowledge/view'
+
+import Community from '@/page/boards/community'
+
+import Event from '@/page/boards/event'
 
 Vue.use(Router)
 
@@ -33,22 +38,37 @@ export default new Router({
     {
       path: '/qna',
       name: 'Qna',
-      component: QNA
+      component: QnA
     },
     {
-      path: '/qna/new',
-      name: 'QnaNew',
-      component: QNANEW
+      path: '/qna/write',
+      name: 'QnaWrite',
+      component: QnAWrite
     },
     {
       path: '/qna/post/:boardId',
-      name: 'QnaPost',
-      component: QNAPOST
+      name: 'QnaView',
+      component: QNAView
+    },
+    {
+      path: '/qna',
+      name: 'Qna',
+      component: QnA
     },
     {
       path: '/knowledge',
       name: 'Knowledge',
       component: Knowledge
+    },
+    {
+      path: '/knowledge/write',
+      name: 'KnowledgeWrite',
+      component: KnowledgeWrite
+    },
+    {
+      path: '/knowledge/post/:boardId',
+      name: 'KnowledgeView',
+      component: KnowledgeView
     },
     {
       path: '/community',
