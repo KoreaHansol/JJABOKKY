@@ -13,9 +13,10 @@ import java.util.ArrayList;
 public class BoardController {
     BoardRepository boardRepository;
 
-    @GetMapping("/getPostList/{boardType}")
-    public ArrayList<Board> getPostList(@PathVariable String boardType) {
-        ArrayList<Board> postList = boardRepository.getPostList(boardType);
+    @GetMapping("/getPostList/{boardType}/{subBoardType}")
+    public ArrayList<Board> getPostList(@PathVariable String boardType, @PathVariable String subBoardType) {
+        System.out.println("boardType" + boardType);
+        ArrayList<Board> postList = boardRepository.getPostList(boardType, subBoardType);
         return postList;
     }
 

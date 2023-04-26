@@ -54,7 +54,6 @@ export default {
 
 <style scoped lang="scss"> 
 .selectbox-container {
-  z-index: 99999;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -84,6 +83,7 @@ export default {
   cursor: pointer;
 
   .select-items {
+    z-index: 1;
     position: absolute;
     right: 0;
     top: 50px;

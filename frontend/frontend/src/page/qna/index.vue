@@ -5,10 +5,10 @@
         <div class="content-header">
           <div class="btn-question" @click="onClickQuestion">질문하기</div>
           <div class="link-area">
-            <div class="link">기술</div>
-            <div class="link">커리어</div>
-            <div class="link">기타</div>
-            <div class="link">전체</div>
+            <div class="link" :class="{ 'selected': selectBoardType === 'tech' }" @click="onSelectBoardType( 'tech' )">기술</div>
+            <div class="link" :class="{ 'selected': selectBoardType === 'careere' }" @click="onSelectBoardType( 'careere' )">커리어</div>
+            <div class="link" :class="{ 'selected': selectBoardType === 'etc' }" @click="onSelectBoardType( 'etc' )">기타</div>
+            <div class="link" :class="{ 'selected': selectBoardType === 'all' }" @click="onSelectBoardType( 'all' )">전체</div>
           </div>
           <div class="sort-area">
             <select-box :datas="selectVisibleItems" v-model="selectVisibleItem" :left="true">{{ selectVisibleItem.text }}</select-box>
@@ -22,7 +22,7 @@
           <div class="content" v-for="post in processedPostList" :key="post.boardId">
             <div class="reply-area">
               <div class="reply">답변</div>
-              <div class="reply-count">0</div>
+              <div class="reply-count">{{ post.commentCount }}</div>
             </div>
             <div class="info">
               <div class="member-info">
@@ -47,6 +47,8 @@ import SelectBox from '@/components/selectBox'
 import req2svr from './req2svr'
 import htmlToFormattedText from 'html-to-formatted-text'
 
+const BOARDTYPE = 'Q&A' 
+
 export default {
   name: 'QNA',
   components: { SelectBox },
@@ -65,7 +67,8 @@ export default {
         { id: 5, text: '조회순' }
       ],
       selectSortItem: { id: 1, text: '최신순' },
-      postList: []
+      postList: [],
+      selectBoardType: 'tech'
     }
   },
   computed: {
@@ -82,9 +85,8 @@ export default {
     }
   },
   async created() {
-    const path = window.location.pathname
     try {
-      this.postList = await this.req2svr.getPostList( path )
+      this.postList = await this.req2svr.getPostList( BOARDTYPE, this.selectBoardType )
     } catch( err ) {
       alert( '게시물을 가져오는데 오류가 생겼습니다.' )
       this.postList = []
@@ -97,6 +99,9 @@ export default {
     onEnterPost( boardId ) {
       this.$router.push( { name: 'QnaPost', params: { boardId } } )
     },
+    onSelectBoardType( boardType ) {
+      this.selectBoardType = boardType
+    }
   }
 
 }
@@ -150,6 +155,11 @@ export default {
           .link {
             font-size: 16px;
             font-weight: bold;
+            cursor: pointer;
+
+            &.selected {
+              color: #8790F9;
+            }
           }
         }
       }

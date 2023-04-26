@@ -49,7 +49,6 @@ public class MemberController {
         member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
         member.setRole("Normal");
         member.setCreateDate(new Timestamp(System.currentTimeMillis()));
-        member.setLoginDate(new Timestamp(System.currentTimeMillis()));
 
         memberService.joinMember(member);
 

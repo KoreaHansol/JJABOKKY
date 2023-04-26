@@ -26,13 +26,17 @@ export default {
   components: {
     quillEditor,
   },
+  props: {
+    useImage: true,
+    initFlag: 0
+  },
   data() {
     return {
       editorOption: {
         modules: {
           toolbar: {
             container: [
-              ["image"],
+              ['image'],
               [{ header: [1, 2, 3, false] }],
               ["bold", "italic", "underline", "strike", "blockquote"],
             ],
@@ -41,7 +45,7 @@ export default {
       },
       content: '',
       imageUrls: [],
-    };
+    }
   },
   methods: {
     onEditorChange() {
@@ -55,7 +59,7 @@ export default {
         modules: {
           toolbar: {
             container: [
-              ["image"],
+              ['image']
               [{ header: [1, 2, 3, false] }],
               ["bold", "italic", "underline", "strike", "blockquote"],
             ],
@@ -94,6 +98,12 @@ export default {
       return this.$refs.myTextEditor.quill
     },
   },
+  watch: {
+    initFlag: function () {
+      this.content= ''
+      this.imageUrls= []
+    },
+  }
 };
 </script>
 
@@ -104,7 +114,6 @@ export default {
 
   .editor {
     height: 40rem;
-    overflow: hidden;
   }
 
   .output {

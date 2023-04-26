@@ -4,7 +4,7 @@
     <div class="sub-title">
     <span class="nickname">{{ this.nickname }}</span>님 지식공유 플랫폼 OKKY에서 최고의 개발자들과 함께 궁금증을 해결하세요.</div>
     
-    <select-box class="select-box" :datas="selectSortItems" v-model="selectSortItem">{{ selectSortItem && selectSortItem.text }}</select-box>
+    <select-box class="select-box" :datas="selectedTopics" v-model="selectedTopic">{{ selectedTopic && selectedTopic.text }}</select-box>
     <input class="title-input" placeholder="제목을 입력해 주세요" v-model="title"/>
     <editor class="editor" @change="onChangeEditor($event)"/>
 
@@ -20,6 +20,9 @@ import req2svr from './req2svr'
 
 import SelectBox from '@/components/selectBox'
 import Editor from '@/components/editor'
+
+const BOARDTYPE = 'Q&A' 
+
 export default {
   name: 'QNA',
   components: { SelectBox, Editor },
@@ -30,13 +33,13 @@ export default {
         content: '',
         imageUrls: []
       },
-      selectSortItems: [
+      selectedTopics: [
         { id: -1, text: '토픽을 선택해 주세요' },
-        { id: 1, text: '기술' },
-        { id: 2, text: '커리어' },
-        { id: 3, text: '기타' },
+        { id: 1, text: '기술', value: 'tech' },
+        { id: 2, text: '커리어', value: 'career' },
+        { id: 3, text: '기타', value: 'etc' },
       ],
-      selectSortItem: { id: -1, text: '토픽을 선택해 주세요' }
+      selectedTopic: { id: -1, text: '토픽을 선택해 주세요' }
     }
   },
   computed: {
@@ -48,7 +51,7 @@ export default {
       return _.get( this.member, 'nickname', '' )
     },
     isValidBoardContent() {
-      return this.selectSortItem.id > 0 && !!this.title && !!this.contents.content
+      return this.selectedTopic.id > 0 && !!this.title && !!this.contents.content
     }
   },
   created() {
@@ -69,7 +72,7 @@ export default {
       }
 
       try {
-        await this.req2svr.savePost( this.member.memberId, this.title, this.contents.content, 'qna', this.selectSortItem.text )
+        await this.req2svr.savePost( this.member.memberId, this.title, this.contents.content, BOARDTYPE, this.selectedTopic.value )
         const imageUrls = _.get( this, 'contents.imageUrls' ) || []
         if( imageUrls.length ) {
           await this.req2svr.saveImageUrls( imageUrls )

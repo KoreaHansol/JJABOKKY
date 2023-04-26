@@ -40,7 +40,6 @@ export default {
   data() {
     return {
       openStatus: false,
-      pathName: null,
     }
   },
   computed: {
@@ -51,9 +50,6 @@ export default {
       return this.$store.getters.getMember
     }
   },
-  created() {
-    this.pathName = window.location.pathname
-  },
   methods: {
     goPageWithLogin( path ) {
       if( !this.isLogin ) {
@@ -63,9 +59,9 @@ export default {
       this.goPage( path )
     },
     goPage( path ) {
-      if( this.pathName !== path ) {
+      const pathName = window.location.pathname
+      if( pathName !== path ) {
         this.$router.push( path )
-        this.pathName = window.location.pathname
       }
     },
     onClickStatus() {
@@ -74,11 +70,12 @@ export default {
     onOutsideClick() {
       this.openStatus = false
     },
-    async logout() {
+    async logout() {  
       await this.$store.dispatch( 'reqeustLogout' )
     },
     isValidLink( path ) { // 렌더링이 너무 많이된다 나중에 고치자
-      return _.includes( this.pathName, path )
+      const pathName = window.location.pathname
+      return _.includes( pathName, path )
     }
   }
 }
@@ -162,7 +159,7 @@ export default {
     }
     
     .stauts {
-      z-index: 99999;
+      z-index: 9999999;
       display: grid;
       grid-template-rows: repeat(4, 1fr);
       position: absolute;

@@ -3,16 +3,15 @@ package board.website.model;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Setter @Getter
-public class Board {
-    private int boardId;
-    private int memberId;
+public class Comment {
+
+    private Integer commentId;
+    private Integer memberId;
     private String nickname;
-    private String boardType;
-    private String subBoardType;
-    private String title;
+    private Integer boardId;
     private String content;
-    private int commentCount;
     private long createDate;
     private long modifyDate;
 }

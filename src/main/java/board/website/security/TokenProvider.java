@@ -26,20 +26,12 @@ public class TokenProvider {
 
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         Key signingKey = new SecretKeySpec(secretKeyBytes, signatureAlgorithm.getJcaName());
+
         return Jwts.builder()
                 .setSubject(member.getId())
                 .signWith(signingKey, signatureAlgorithm)
                 .setExpiration(new Date(System.currentTimeMillis() + expTime))
-                .claim("member", Member.builder()
-                        .memberId(member.getMemberId())
-                        .id(member.getId())
-                        .email(member.getEmail())
-                        .name(member.getName())
-                        .role(member.getRole())
-                        .nickname(member.getNickname())
-                        .createDate(member.getCreateDate())
-                        .loginDate(member.getLoginDate())
-                        .build() )
+                .claim("member", member )
                 .compact();
     }
 

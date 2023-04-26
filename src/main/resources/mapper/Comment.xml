@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board.website.repository.CommentRepository">
+    <insert id="saveComment" parameterType="comment">
+        insert into comment (member_id, board_id, content, create_date, modify_date)
+        values (#{comment.memberId},#{comment.boardId},#{comment.content},#{comment.createDate},#{comment.modifyDate})
+    </insert>
+    <select id="getCommentList" resultType="comment">
+        SELECT *, b.nickname FROM comment a
+        INNER JOIN member b
+        ON a.member_id = b.member_id
+        WHERE board_id = #{boardId}
+    </select>
+</mapper>
