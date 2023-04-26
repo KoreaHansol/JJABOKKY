@@ -47,7 +47,7 @@ import SelectBox from '@/components/selectBox'
 import req2svr from './req2svr'
 import htmlToFormattedText from 'html-to-formatted-text'
 
-const BOARDTYPE = 'Q&A' 
+const BOARDTYPE = 'qna' 
 const ROUTERPATH = 'qna'
 const WRITE_COMPONENT_NAME = 'QnaWrite'
 

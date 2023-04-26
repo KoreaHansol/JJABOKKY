@@ -21,7 +21,8 @@ import req2svr from './req2svr'
 import SelectBox from '@/components/selectBox'
 import Editor from '@/components/editor'
 
-const BOARDTYPE = 'Q&A' 
+const BOARDTYPE = 'qna'
+const ROUTER_URL = '/qna'
 
 export default {
   name: 'QnAWtite',
@@ -78,7 +79,7 @@ export default {
           await this.req2svr.saveImageUrls( imageUrls )
         }
         alert( '게시물을 등록했습니다.' )
-        this.$router.push( '/qna' )
+        this.$router.push( ROUTER_URL )
       } catch( err ) {
         alert( '게시물을 등록하는 중 오류가 발생했습니다.' )
       }
