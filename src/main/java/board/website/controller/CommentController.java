@@ -22,7 +22,6 @@ public class CommentController {
 
     @GetMapping("/getCommentList")
     public ArrayList<Comment> getCommentList(@RequestParam String boardId) {
-        System.out.println("boardId" + boardId);
         return commentRepository.getCommentList(boardId);
     }
 

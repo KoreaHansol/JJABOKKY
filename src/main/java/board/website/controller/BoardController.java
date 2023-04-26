@@ -15,7 +15,6 @@ public class BoardController {
 
     @GetMapping("/getPostList/{boardType}/{subBoardType}")
     public ArrayList<Board> getPostList(@PathVariable String boardType, @PathVariable String subBoardType) {
-        System.out.println("boardType" + boardType);
         ArrayList<Board> postList = boardRepository.getPostList(boardType, subBoardType);
         return postList;
     }
