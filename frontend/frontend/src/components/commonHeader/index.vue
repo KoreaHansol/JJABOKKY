@@ -62,10 +62,7 @@ export default {
       this.goPage( path )
     },
     goPage( path ) {
-      if( this.pathName !== path ) {
-        this.$router.push( path )
-      }
-      console.log( 'gopage' )
+      this.$router.push( path )
       this.pathName = window.location.pathname
     },
     onClickStatus() {

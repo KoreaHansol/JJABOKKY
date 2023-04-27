@@ -48,9 +48,9 @@ import SelectBox from '@/components/selectBox'
 import req2svr from './req2svr'
 import htmlToFormattedText from 'html-to-formatted-text'
 
-const BOARDTYPE = 'Knowledge' 
+const BOARDTYPE = 'knowledge' 
 const ROUTERPATH = 'knowledge'
-const WRITE_COMPONENT_NAME = 'KnowledgeView'
+const VIEW_COMPONENT_NAME = 'KnowledgeView'
 
 export default {
   name: 'Knowledge',
@@ -87,23 +87,27 @@ export default {
       } )
     }
   },
-  async created() {
-    try {
-      this.postList = await this.req2svr.getPostList( BOARDTYPE, this.selectBoardType )
-    } catch( err ) {
-      alert( '게시물을 가져오는데 오류가 생겼습니다.' )
-      this.postList = []
-    }
+  created() {
+    this.getPostList()
   },
   methods: {
     onClickQuestion() {
       this.$router.push( `/${ROUTERPATH}/write` )
     },
     onEnterPost( boardId ) {
-      this.$router.push( { name: WRITE_COMPONENT_NAME, params: { boardId } } )
+      this.$router.push( { name: VIEW_COMPONENT_NAME, params: { boardId } } )
     },
     onSelectBoardType( boardType ) {
       this.selectBoardType = boardType
+      this.getPostList()
+    },
+    async getPostList() {
+      try {
+        this.postList = await this.req2svr.getPostList( BOARDTYPE, this.selectBoardType )
+      } catch( err ) {
+        alert( '게시물을 가져오는데 오류가 생겼습니다.' )
+        this.postList = []
+      }
     }
   }
 

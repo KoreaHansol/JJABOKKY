@@ -2,6 +2,8 @@ import { store } from '../../store/store'
 import jwt_decode from 'jwt-decode'
 import req2svr from './req2svr'
 
+const CHECK_EXPIRE_TOKEN_TIME = 1000 * 60
+
 export async function checkExpireJwtToken( decodeToken ) {
   if( decodeToken ) {
     const token = sessionStorage.getItem( 'token' )
@@ -13,7 +15,7 @@ export async function checkExpireJwtToken( decodeToken ) {
   if( now < exp ) {
     console.log( '세션만료기간이 아직 지나지 않음', new Date(exp) )
     store.commit( 'expireToken', false )
-    setTimeout( () => { checkJwtToken( decodeToken ) }, 1000 * 60 * 60 )
+    setTimeout( () => { checkJwtToken( decodeToken ) }, CHECK_EXPIRE_TOKEN_TIME )
     return false
   }
 
@@ -25,7 +27,7 @@ export async function checkExpireJwtToken( decodeToken ) {
   }
 
   store.commit( 'expireToken', false )
-  setTimeout( () => { checkJwtToken( decodeToken ) }, 1000 * 60 * 60 )
+  setTimeout( () => { checkJwtToken( decodeToken ) }, CHECK_EXPIRE_TOKEN_TIME )
 
   window.sessionStorage.setItem( 'token', refreshToken )
 

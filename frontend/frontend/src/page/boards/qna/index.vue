@@ -6,7 +6,7 @@
           <div class="btn-question" @click="onClickQuestion">질문하기</div>
           <div class="link-area">
             <div class="link" :class="{ 'selected': selectBoardType === 'tech' }" @click="onSelectBoardType( 'tech' )">기술</div>
-            <div class="link" :class="{ 'selected': selectBoardType === 'careere' }" @click="onSelectBoardType( 'careere' )">커리어</div>
+            <div class="link" :class="{ 'selected': selectBoardType === 'career' }" @click="onSelectBoardType( 'career' )">커리어</div>
             <div class="link" :class="{ 'selected': selectBoardType === 'etc' }" @click="onSelectBoardType( 'etc' )">기타</div>
             <div class="link" :class="{ 'selected': selectBoardType === 'all' }" @click="onSelectBoardType( 'all' )">전체</div>
           </div>
@@ -49,7 +49,7 @@ import htmlToFormattedText from 'html-to-formatted-text'
 
 const BOARDTYPE = 'qna' 
 const ROUTERPATH = 'qna'
-const WRITE_COMPONENT_NAME = 'QnaWrite'
+const VIEW_COMPONENT_NAME = 'QnaView'
 
 export default {
   name: 'QnA',
@@ -86,23 +86,27 @@ export default {
       } )
     }
   },
-  async created() {
-    try {
-      this.postList = await this.req2svr.getPostList( BOARDTYPE, this.selectBoardType )
-    } catch( err ) {
-      alert( '게시물을 가져오는데 오류가 생겼습니다.' )
-      this.postList = []
-    }
+   created() {
+    this.getPostList()
   },
   methods: {
     onClickQuestion() {
       this.$router.push( `/${ROUTERPATH}/write` )
     },
     onEnterPost( boardId ) {
-      this.$router.push( { name: WRITE_COMPONENT_NAME, params: { boardId } } )
+      this.$router.push( { name: VIEW_COMPONENT_NAME, params: { boardId } } )
     },
     onSelectBoardType( boardType ) {
       this.selectBoardType = boardType
+      this.getPostList()
+    },
+    async getPostList() {
+      try {
+        this.postList = await this.req2svr.getPostList( BOARDTYPE, this.selectBoardType )
+      } catch( err ) {
+        alert( '게시물을 가져오는데 오류가 생겼습니다.' )
+        this.postList = []
+      }
     }
   }
 

@@ -67,7 +67,7 @@ public class MemberController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         Integer memberId = memberById.getMemberId();
-        String token = tokenProvider.createToken(memberById, (1000 * 60 * 60));
+        String token = tokenProvider.createToken(memberById, (1000 * 60 * 60 * 24));
         return ResponseEntity.status(HttpStatus.OK).body(token);
     }
 }

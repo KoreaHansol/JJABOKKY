@@ -23,9 +23,9 @@ export default {
   getPost( boardId ) {
     return axios.get( apiUrl( `/board/getPost/${ boardId }` ) ).then( x => checkResCode( x ) )
   },
-  saveComment( memberId, content, boardId ) {
+  saveComment( memberId, content, boardId, parentCommentId = null ) {
     return axios.post( apiUrl( '/comment/saveComment' ), {
-      memberId, content, boardId
+      memberId, content, boardId, parentCommentId
     } ).then( x => checkResCode( x ) )
   },
   getCommentList( boardId ) {

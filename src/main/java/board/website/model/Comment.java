@@ -8,6 +8,7 @@ import lombok.Setter;
 public class Comment {
 
     private Integer commentId;
+    private Integer parentCommentId;
     private Integer memberId;
     private String nickname;
     private Integer boardId;
