@@ -21,7 +21,7 @@
       <editor class="comment-editor" :useImage="false" :initFlag="initFlag" @change="onChangeEditor( $event )"/>
       <div class="btn-comment" @click="onSaveComment">답변 쓰기</div>
 
-      <div class="comments-wrapper" v-for="comment in processedCommentList" :key="comment.commentId">
+      <div class="comments-wrapper" v-for="comment in processedParentCommentList" :key="comment.commentId">
        <div class="comment-wrapper">
           <div class="recommend"></div>
           <div class="comment-content">
@@ -111,6 +111,18 @@ export default {
           diff
         }
       } )
+    },
+    processedParentCommentList() {
+      return _( this.commentList )
+      .filter( comment => !comment.parentCommentId )
+      .map( comment => {
+        const diff = moment(comment.createDate).locale( 'ko' ).fromNow()
+        return {
+          ...comment,
+          diff
+        }
+      } )
+      .value()
     },
     childCommentCountMap() {
       return _( this.processedChildCommentList )

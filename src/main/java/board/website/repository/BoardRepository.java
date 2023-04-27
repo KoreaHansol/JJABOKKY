@@ -8,7 +8,9 @@ import java.util.ArrayList;
 
 @Mapper
 public interface BoardRepository {
+    ArrayList<Board> getAllPostList(String boardType);
     ArrayList<Board> getPostList(@Param("boardType") String boardType, @Param("subBoardType") String subBoardType);
     void savePost(@Param("board") Board board);
-    Board getPost(@Param("boardId") String boardId);
+    Board getPost(@Param("boardId") Integer boardId);
+    void updateViews(@Param("views") Integer views, @Param("boardId") Integer boardId);
 }

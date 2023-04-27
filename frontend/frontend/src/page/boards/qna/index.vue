@@ -11,8 +11,7 @@
             <div class="link" :class="{ 'selected': selectBoardType === 'all' }" @click="onSelectBoardType( 'all' )">전체</div>
           </div>
           <div class="sort-area">
-            <select-box :datas="selectVisibleItems" v-model="selectVisibleItem" :left="true">{{ selectVisibleItem.text }}</select-box>
-            <select-box :datas="selectSortItems" v-model="selectSortItem" :right="true">{{ selectSortItem.text }}</select-box>
+            <select-box :datas="selectVisibleItems" v-model="selectVisibleItem">{{ selectVisibleItem.text }}</select-box>
           </div>
         </div>
 
@@ -32,7 +31,7 @@
                 <div class="title" @click="onEnterPost( post.boardId )">{{ post.title }}</div>
                 <div class="post-preview">{{ post.content }}</div>
               </div>
-              <div class="tag-area">조회수: 4 추천수: 3</div>
+              <div class="tag-area"><img class="img-views" src="/static/image/views.JPG"/>{{ post.views || 0 }}</div>
               
             </div>
           </div>
@@ -57,10 +56,10 @@ export default {
   data () {
     return {
       selectVisibleItems: [
-        { id: 1, text: '전체' },
-        { id: 2, text: '답변없음' }
+        { id: -1, text: '전체' },
+        { id: 1, text: '답변없음' }
       ],
-      selectVisibleItem: { id: 1, text: '전체' },
+      selectVisibleItem: { id: -1, text: '전체' },
       selectSortItems: [
         { id: 1, text: '최신순' },
         { id: 2, text: '추천순' },
@@ -76,7 +75,12 @@ export default {
   computed: {
     req2svr: () => req2svr,
     processedPostList() {
-      return _.map( this.postList, post => {
+      return _( this.postList )
+      .filter( post => {
+        console.log( this.selectVisibleItem.id )
+        return this.selectVisibleItem.id > 0 ? !post.commentCount : post
+      } )
+      .map( post => {
         let content = post.content
         content = htmlToFormattedText(content)
         return {
@@ -84,6 +88,7 @@ export default {
           content
         }
       } )
+      .value()
     }
   },
    created() {
@@ -98,11 +103,23 @@ export default {
     },
     onSelectBoardType( boardType ) {
       this.selectBoardType = boardType
+      if( boardType === 'all' ) {
+        this.getAllPostList()
+        return
+      }
       this.getPostList()
     },
     async getPostList() {
       try {
         this.postList = await this.req2svr.getPostList( BOARDTYPE, this.selectBoardType )
+      } catch( err ) {
+        alert( '게시물을 가져오는데 오류가 생겼습니다.' )
+        this.postList = []
+      }
+    },
+    async getAllPostList() {
+      try {
+        this.postList = await this.req2svr.getAllPostList( BOARDTYPE )
       } catch( err ) {
         alert( '게시물을 가져오는데 오류가 생겼습니다.' )
         this.postList = []
@@ -236,6 +253,11 @@ export default {
               display: flex;
               justify-content: flex-end;
               align-items: flex-end;
+
+              .img-views {
+                margin-right: 3px;
+                width: 18px;
+              }
             }
           }
         }

@@ -10,6 +10,9 @@ export default {
   getPostList( boardType, selectBoardType ) {
     return axios.get( apiUrl( `/board/getPostList/${boardType}/${ selectBoardType }` ) ).then( x => checkResCode( x ) )
   },
+  getAllPostList( boardType ) {
+    return axios.get( apiUrl( `/board/getAllPostList` ), { params: { boardType } } ).then( x => checkResCode( x ) )
+  },
   savePost( memberId, title, content, boardType, subBoardType ) {
     return axios.post( apiUrl( '/board/save' ), {
       memberId, title, content, boardType, subBoardType

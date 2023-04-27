@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="board.website.repository.BoardRepository">
     <select id="getPostList" resultType="Board">
-        SELECT a.board_id, a.member_id, b.nickname, a.board_type, a.sub_board_type, a.title, a.content, a.create_date, a.modify_date,
+        SELECT a.board_id, a.member_id, b.nickname, a.board_type, a.sub_board_type, a.title, a.content, a.create_date, a.modify_date, a.views,
         (SELECT COUNT(*) FROM comment c WHERE a.board_id = c.board_id) AS commentCount
         FROM board a
         JOIN member b on a.member_id = b.member_id
@@ -12,8 +12,16 @@
         AND a.sub_board_type = #{subBoardType}
         ORDER BY create_date desc;
     </select>
+    <select id="getAllPostList" resultType="Board">
+        SELECT a.board_id, a.member_id, b.nickname, a.board_type, a.sub_board_type, a.title, a.content, a.create_date, a.modify_date, a.views,
+        (SELECT COUNT(*) FROM comment c WHERE a.board_id = c.board_id) AS commentCount
+        FROM board a
+        JOIN member b on a.member_id = b.member_id
+        WHERE a.board_type = #{boardType}
+        ORDER BY create_date desc;
+    </select>
     <select id="getPost" resultType="Board">
-        SELECT a.board_id, a.member_id, a.board_type, a.sub_board_type, a.title, a.content, a.create_date, a.modify_date, b.nickname
+        SELECT a.board_id, a.member_id, a.board_type, a.sub_board_type, a.title, a.content, a.create_date, a.modify_date, a.views, b.nickname
         FROM board a
         JOIN member b on a.member_id = b.member_id
         WHERE a.board_id = #{boardId}
@@ -22,4 +30,9 @@
         insert into board (member_id, board_type, sub_board_type, title, content, create_date, modify_date)
         values (#{board.memberId},#{board.boardType},#{board.subBoardType},#{board.title},#{board.content}, #{board.createDate}, #{board.modifyDate})
     </insert>
+    <update id="updateViews" parameterType="board">
+        UPDATE board
+        SET views = #{views}
+        WHERE board_id = #{boardId}
+    </update>
 </mapper>
