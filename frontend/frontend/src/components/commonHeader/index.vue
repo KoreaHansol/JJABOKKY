@@ -73,6 +73,7 @@ export default {
     },
     async logout() {  
       await this.$store.dispatch( 'reqeustLogout' )
+      this.$router.push( '/' )
     },
     isValidLink( path ) { // 렌더링이 너무 많이된다 나중에 고치자
       return _.includes( this.pathName, path )

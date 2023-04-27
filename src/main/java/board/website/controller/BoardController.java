@@ -26,8 +26,6 @@ public class BoardController {
     @GetMapping("/getPost/{boardId}")
     public Board getPost(@PathVariable Integer boardId) {
         Board board = boardRepository.getPost(boardId);
-        System.out.println(board.getBoardId());
-        System.out.println(board.getViews());
 
         if(board.getViews()==null) {
             boardRepository.updateViews(1, boardId);
